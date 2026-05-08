@@ -1,88 +1,121 @@
-# Diseño de casos de prueba (AAA)
+# Framework final con POM y Allure
 
-En este branch comenzamos a organizar mejor los casos de prueba.
+Este branch contiene una plantilla base de automatización con Playwright y JavaScript.
 
-Hasta ahora los tests estaban escritos directamente dentro de los archivos `.spec.js`, repitiendo acciones como abrir la página o realizar login.
+El objetivo es que sirva como base para el trabajo práctico final.
 
-En este punto del curso introducimos dos conceptos importantes:
+## Qué incluye este branch
 
-- estructura de test **AAA (Arrange / Act / Assert)**
-- **reutilización de acciones** mediante funciones helper
-
-El objetivo es escribir tests más claros y evitar repetir código.
+- estructura Page Object Model (POM)
+- datos de prueba en archivo JSON
+- reporter HTML de Playwright
+- integración con Allure
+- ejecución en Chrome visible
 
 ---
 
-# Estructura AAA
+# Instalación
 
-Los tests ahora siguen la siguiente estructura:
+## Instalar dependencias
 
-
-Arrange → preparar el escenario
-Act → ejecutar la acción que queremos probar
-Assert → validar el resultado esperado
-
-
-Ejemplo:
-
-```javascript
-test('Login exitoso', async ({ page }) => {
-
-  // Arrange
-  await goToLogin(page)
-
-  // Act
-  await login(page, username, password)
-
-  // Assert
-  await validarDashboard(page)
-
-})
+```bash
+npm install
+```
+Instalar Playwright y navegadores si fuera necesario
+```
+npx playwright install
 ```
 
-Esto permite que el test sea más fácil de leer y entender.
+Instalar Allure CLI. Si no está instalado:
 
-## Nueva estructura del proyecto
+```bash
+npm install -g allure
+```
 
-En este branch se introducen nuevas carpetas para organizar mejor el proyecto.
+Verificar instalación:
 
+```
+allure --version
+```
+**Ejecutar pruebas:**
 
-+ data/
-+ helpers/
-+ tests/
+```
+npx playwright test
+```
+Las pruebas se ejecutarán en Chrome visible.
 
-### data/
+Ver reporte HTML de Playwright
+```
+npx playwright show-report
+```
+Generar reporte Allure
 
-Contiene datos de prueba que serán utilizados por los tests.
+```
+allure generate ./allure-results --clean -o ./allure-report
+```
 
-Ejemplo:
+Abrir reporte Allure
+```
+allure open ./allure-report
+```
 
-data/users.json
+## Pre requisitos para reporte Allure
 
-**Separar los datos del código permite:**
+Java (requerido para Allure)
 
-+ reutilizar información
+Allure necesita Java para generar los reportes.
 
-+ modificar datos sin cambiar los tests
+**Verificar instalación:**
+```
+java -version
+```
+Si no está instalado descargar desde:
 
-+ preparar escenarios de prueba más fácilmente
+https://adoptium.net/
 
-### helpers/
+**Configurar variable de entorno JAVA_HOME**
 
-Contiene funciones reutilizables que representan acciones comunes dentro de la aplicación.
+Después de instalar Java es necesario configurar la variable de entorno.
 
-**Ejemplos:** 
+**Ejemplo en Windows:**
 
-1) abrir la página de login
+JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-17
 
-2) realizar login
+**Agregar también al PATH:**
 
-3) validar que el dashboard esté visible
+%JAVA_HOME%\bin
 
-Esto evita repetir el mismo código en cada caso de prueba.
+**Verificar nuevamente:**
+```
+java -version
+```
+---
+## Estructura del proyecto
 
-### tests/
+**data/** Contiene datos de prueba reutilizables.
 
-Contiene los casos de prueba automatizados.
+**pages/** Contiene las Page Objects del framework.
 
-Cada archivo .spec.js representa un conjunto de pruebas.
+**tests/** Contiene los casos de prueba.
+
+## Qué archivo modificar para adaptar esta plantilla
+
+**Cambiar URL base**
+
+Modificar en: playwright.config.js
+
+**Cambiar datos de usuario**
+
+Modificar en: data/users.json
+
+**Cambiar locators de login**
+
+Modificar en: pages/LoginPage.js
+
+**Agregar nuevas páginas**
+
+Crear nuevos archivos dentro de: pages/
+
+**Agregar nuevas pruebas**
+
+Crear nuevos archivos dentro de: tests/

@@ -3,8 +3,22 @@
     "username": "Admin",
     "password": "admin123"
   },
-  "invalidUser": {
-    "username": "Admin",
-    "password": "incorrecto"
-  }
+  "invalidUsers": [
+    {
+      "username": "Admin",
+      "password": "admin124",
+      "message": "Invalid credentials"
+    },
+    {
+      "username": "usuarioInvalido",
+      "password": "admin123",
+      "message": "Invalid credentials"
+    }
+  ],
+  "menuOptions": [
+    "Admin",
+    "PIM",
+    "Leave",
+    "Time"
+  ]
 }
