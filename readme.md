@@ -51,7 +51,7 @@ npx playwright show-report
 Generar reporte Allure
 
 ```
-allure generate ./allure-results --clean -o ./allure-report
+allure generate ./allure-results -o ./allure-report
 ```
 
 Abrir reporte Allure
